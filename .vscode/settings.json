@@ -66,5 +66,5 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "Unity-Template-3D.sln"
+    "dotnet.defaultSolution": "Calc.sln"
 }
