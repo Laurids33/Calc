@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Kugel : MonoBehaviour
 {
@@ -9,6 +10,15 @@ public class Kugel : MonoBehaviour
     public TextMeshProUGUI kommentarAnzeige;
     public TextMeshProUGUI[] loesungAnzeige = new TextMeshProUGUI[5];
     readonly int[] posIndex = new int[5];
+
+    readonly float eingabeFaktor = 5;
+    float yStrecke = -2;
+    int punkte = 0;
+    public TextMeshProUGUI punkteAnzeige;
+    bool bewegtSich = false;
+
+    int leben = 3;
+    public TextMeshProUGUI lebenAnzeige;
 
     void Start()
     {
@@ -76,6 +86,64 @@ public class Kugel : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             loesungAnzeige[posIndex[i]].text = "" + loesung[i];
+        }
+
+        // Kugel startet oben
+        transform.position = new Vector3(Random.Range(-7.5f, 7.5f), 12, 0);
+        bewegtSich = true;
+    }
+
+    void Update()
+    {
+        if (bewegtSich)
+        {
+            transform.Translate(
+                Input.GetAxis("Horizontal") * eingabeFaktor * Time.deltaTime,
+                yStrecke * Time.deltaTime,
+                0
+            );
+        }
+
+        // Falls Kugel zwischen den Plattformen
+        if (transform.position.y < 0)
+        {
+            Fehler("Kein Treffer");
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        // Nummer der Platformen ermitteln
+        int plattformNummer = System.Convert.ToInt32(collision.gameObject.name.Substring(8, 1));
+        if (plattformNummer == posIndex[0])
+        {
+            bewegtSich = false;
+            yStrecke *= 1.05f;
+            kommentarAnzeige.text = "Richtige Lösung";
+            punkte++;
+            punkteAnzeige.text = "Punkte: " + punkte;
+            Invoke(nameof(AufgabenStellen), 1.5f);
+        }
+        else
+        {
+            Fehler("Falsche Lösung");
+        }
+    }
+
+    void Fehler(string text)
+    {
+        leben--;
+        lebenAnzeige.text = "Leben: " + leben;
+        bewegtSich = false;
+        if (leben > 0)
+        {
+            yStrecke *= 1.05f;
+            kommentarAnzeige.text = $"{text} nur noch {leben} Leben";
+            Invoke(nameof(AufgabenStellen), 1.5f);
+        }
+        else
+        {
+            kommentarAnzeige.text = "Das war dein letztes Leben";
         }
     }
 }

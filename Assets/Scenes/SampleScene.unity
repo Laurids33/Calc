@@ -1550,6 +1550,8 @@ MonoBehaviour:
   - {fileID: 600670307}
   - {fileID: 279268018}
   - {fileID: 2110475505}
+  punkteAnzeige: {fileID: 977347416}
+  lebenAnzeige: {fileID: 1314155246}
 --- !u!1 &977347414
 GameObject:
   m_ObjectHideFlags: 0
