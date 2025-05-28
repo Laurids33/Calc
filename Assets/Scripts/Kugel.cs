@@ -102,13 +102,15 @@ public class Kugel : MonoBehaviour
                 yStrecke * Time.deltaTime,
                 0
             );
+
+            // Falls Kugel zwischen den Plattformen
+            if (transform.position.y < 0)
+            {
+                Fehler("Kein Treffer");
+            }
         }
 
-        // Falls Kugel zwischen den Plattformen
-        if (transform.position.y < 0)
-        {
-            Fehler("Kein Treffer");
-        }
+
     }
 
     void OnCollisionEnter(Collision collision)
