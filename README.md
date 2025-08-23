@@ -1,8 +1,9 @@
 # Installation
 ## NixOS
-Add following code block to your configuration.
+Add following codeblock to your `configuration.nix`.
 ```nix
   environment.systemPackages = with pkgs; [
+    steam-run
     # calc-game
     (import (builtins.fetchurl {
       url = "https://github.com/Laurids33/Calc/releases/download/release_v1.00.01/package.nix";
@@ -10,3 +11,4 @@ Add following code block to your configuration.
     }) {inherit pkgs;})
   ];
 ```
+Run either the .desktop file or use `steam-run calc-game`.
