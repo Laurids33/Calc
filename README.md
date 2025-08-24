@@ -3,12 +3,14 @@
 Add following codeblock to your `configuration.nix`.
 ```nix
   environment.systemPackages = with pkgs; [
-    steam-run
     # calc-game
     (import (builtins.fetchurl {
       url = "https://github.com/Laurids33/Calc/releases/download/release_v1.00.01/package.nix";
-      sha256 = "0v4h30x2bhybhk2jng38nr6wld7wi3ki0c451r31jpdw87c6h0k1";
-    }) {inherit pkgs;})
+      sha256 = "193yrhcws798crp0cw8qrjnfng2r5m181hbrxf7jg5fvjz2di2b5";
+    }) {
+      inherit pkgs;
+      inherit (pkgs) stdenv fetchurl lib unzip steam-run;
+    })
   ];
 ```
-Run either the .desktop file or use `steam-run calc-game`.
+Use either the .desktop file or run `calc-game`.
