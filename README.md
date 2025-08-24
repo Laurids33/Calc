@@ -1,5 +1,6 @@
-# Installation
-## NixOS
+# SpaceShooter
+## Installation
+#@# NixOS
 Add following codeblock to your `configuration.nix`.
 ```nix
   environment.systemPackages = with pkgs; [
